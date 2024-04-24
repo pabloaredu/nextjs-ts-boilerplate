@@ -10,9 +10,14 @@ import styles from "../pages/page.module.css";
 interface Props {
   text: string;
   showSaveButton?: boolean;
+  showGoToButton?: boolean;
 }
 
-export default function BasicCard({ text, showSaveButton = true }: Props) {
+export default function BasicCard({
+  text,
+  showSaveButton = true,
+  showGoToButton = true,
+}: Props) {
   return (
     <Card className={styles.card} sx={{ minWidth: 275 }}>
       <CardContent>
@@ -28,9 +33,11 @@ export default function BasicCard({ text, showSaveButton = true }: Props) {
             Save quote
           </Button>
         )}
-        <Button size="small" className={styles.rightButton}>
-          Go to quote
-        </Button>
+        {showGoToButton && (
+          <Button size="small" className={styles.rightButton}>
+            Go to quote
+          </Button>
+        )}
       </CardActions>
     </Card>
   );

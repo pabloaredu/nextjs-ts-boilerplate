@@ -1,26 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Sidebar";
 import styles from "../page.module.css";
 import BasicCard from "@/components/Card";
 
-const sampleData = [
-  '"For instance, on the planet Earth, man had always assumed that he was more intelligent than dolphins because he had achieved so much\u2014the wheel, New York, wars and so on\u2014whilst all the dolphins had ever done was muck about in the water having a good time. But conversely, the dolphins had always believed that they were far more intelligent than man\u2014for precisely the same reasons."',
-  '"Don\'t Panic."',
-  '"Time is an illusion. Lunchtime doubly so."',
-];
+type Quote = {
+  id: number;
+  text: string;
+};
 
-export default function Library() {
+const Library = () => {
+  const [quotes, setQuotes] = useState<Quote[]>([]);
+
+  useEffect(() => {
+    // Todo pa: add a loading state
+    const fetchQuotes = async () => {
+      try {
+        const response = await fetch("/api/quotes");
+        if (!response.ok) {
+          throw new Error("Failed to fetch quotes");
+        }
+        const data = await response.json();
+        setQuotes(data);
+      } catch (error) {
+        console.error("Error fetching quotes:", error);
+      }
+    };
+
+    fetchQuotes();
+  }, []);
+
   return (
     <div className={styles.container}>
       <Sidebar />
       <main className={styles.main}>
         <h2>Library</h2>
         <div className={styles.cardContainer}>
-          {sampleData.map((text, index) => (
-            <BasicCard key={index} text={text} />
+          {quotes.map((quote) => (
+            <BasicCard
+              key={quote.id}
+              text={quote.text}
+              showGoToButton={false}
+            />
           ))}
         </div>
       </main>
     </div>
   );
-}
+};
+
+export default Library;
