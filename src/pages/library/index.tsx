@@ -9,15 +9,15 @@ const sampleData = [
   '"Time is an illusion. Lunchtime doubly so."',
 ];
 
-export default function Bookmarks() {
+export default function Library() {
   return (
     <div className={styles.container}>
       <Sidebar />
       <main className={styles.main}>
-        <h2>Bookmarks</h2>
+        <h2>Library</h2>
         <div className={styles.cardContainer}>
           {sampleData.map((text, index) => (
-            <BasicCard key={index} text={text} showSaveButton={false} />
+            <BasicCard key={index} text={text} />
           ))}
         </div>
       </main>
