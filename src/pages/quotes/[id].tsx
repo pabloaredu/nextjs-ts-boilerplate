@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import BasicCard from "@/components/Card";
+import useQuote from "@/hooks/use-quote";
 import { useRouter } from "next/router";
 import Sidebar from "../../components/Sidebar";
 import styles from "../page.module.css";
-import BasicCard from "@/components/Card";
-import { Quote } from "@/types";
-import useQuote from "@/hooks/use-quote";
 
 export default function QuotePage() {
   const { quotes } = useQuote();

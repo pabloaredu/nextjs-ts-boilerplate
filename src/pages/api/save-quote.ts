@@ -1,6 +1,6 @@
 import fs from "fs";
-import path from "path";
 import { NextApiRequest, NextApiResponse } from "next";
+import path from "path";
 import type { Quote } from "../../types";
 
 const filePath = path.join(process.cwd(), "src", "data", "bookmarks.json");

@@ -1,13 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
+import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
 import { Quote } from "../../types";
-
-/*
-TODO:
-- Improve search functionality?
-- Create readme and PR description
-*/
 
 const filePath = path.join(process.cwd(), "src", "data", "quotes.json");
 

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import Snackbar from "@mui/material/Snackbar";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import { useState } from "react";
 import styles from "../pages/page.module.css";
 import type { Quote } from "../types";
 
