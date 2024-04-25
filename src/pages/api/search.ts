@@ -1,24 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import fs from "fs";
+import path from "path";
+import { Quote } from "../../types";
 
-type Quote = {
-  id: number;
-  text: string;
-};
+/*
+TODO:
+- Improve search functionality?
+- Create readme and PR description
+*/
 
-const sampleData: Quote[] = [
-  {
-    id: 1,
-    text: '"For instance, on the planet Earth, man had always assumed that he was more intelligent than dolphins because he had achieved so much—the wheel, New York, wars and so on—whilst all the dolphins had ever done was muck about in the water having a good time. But conversely, the dolphins had always believed that they were far more intelligent than man—for precisely the same reasons."',
-  },
-  {
-    id: 2,
-    text: '"Don\'t Panic."',
-  },
-  {
-    id: 3,
-    text: '"Time is an illusion. Lunchtime doubly so."',
-  },
-];
+const filePath = path.join(process.cwd(), "src", "data", "quotes.json");
 
 export default function handler(
   req: NextApiRequest,
@@ -28,9 +19,22 @@ export default function handler(
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
-  const term = req.query.q as string;
-  const regex = new RegExp(term, "ig");
-  const results = sampleData.filter((q) => regex.test(q.text));
+  try {
+    const jsonData = fs.readFileSync(filePath, "utf8");
+    const quotes = JSON.parse(jsonData);
 
-  res.status(200).json(results);
+    const term = req.query.q as string | undefined;
+    if (term) {
+      const regex = new RegExp(term, "i");
+      const filteredQuotes = quotes.filter((quote: Quote) =>
+        regex.test(quote.text)
+      );
+      res.status(200).json(filteredQuotes);
+    } else {
+      res.status(200).json(quotes);
+    }
+  } catch (error) {
+    console.error("Error reading quotes file:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }

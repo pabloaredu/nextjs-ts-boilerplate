@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { Quote } from "../../types";
 
-const filePath = path.join(process.cwd(), "src", "data", "quotes.json");
+const filePath = path.join(process.cwd(), "src", "data", "bookmarks.json");
 
 export default function handler(
   req: NextApiRequest,
