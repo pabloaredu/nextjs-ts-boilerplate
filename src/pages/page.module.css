@@ -29,6 +29,13 @@
   color: #333; 
 }
 
+.activeLink {
+  text-decoration: none;
+  color: #333;
+  background-color: #C3D7DF;
+}
+
+
 .cardContainer {
   display: flex;
   flex-direction: column;
@@ -40,6 +47,7 @@
 .card {
   width: 600px; 
   margin: 20px 0;  
+  background-color: #FAFAFA;
 }
 
 .cardActions {

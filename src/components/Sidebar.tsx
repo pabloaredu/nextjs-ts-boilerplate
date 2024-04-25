@@ -1,16 +1,27 @@
 import React from "react";
+import { useRouter } from "next/router";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Link from "next/link";
 import { Box } from "@mui/material";
 import styles from "../pages/page.module.css";
+import { Url } from "next/dist/shared/lib/router/router";
 
 const drawerWidth = 240;
 
 export default function Sidebar() {
+  const router = useRouter();
+
+  const handleNavigation = (url: Url) => {
+    router.push(url);
+  };
+
+  const isActive = (path: string) => router.pathname === path;
+
+  const menuItems = ["/", "/bookmarks", "/library"];
+
   return (
     <Box component="nav">
       <Drawer
@@ -21,32 +32,28 @@ export default function Sidebar() {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: "border-box",
+            backgroundColor: "#FAFAFA",
           },
         }}
         open
       >
         <List>
-          <Link href="/" passHref>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Home" className={styles.link} />
+          {menuItems.map((path) => (
+            <ListItem key={path} disablePadding>
+              <ListItemButton
+                onClick={() => handleNavigation(path)}
+                className={isActive(path) ? styles.activeLink : styles.link}
+              >
+                <ListItemText
+                  primary={
+                    path === "/"
+                      ? "Home"
+                      : path.slice(1).charAt(0).toUpperCase() + path.slice(2)
+                  }
+                />
               </ListItemButton>
             </ListItem>
-          </Link>
-          <Link href="/bookmarks" passHref>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Bookmarks" className={styles.link} />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-          <Link href="/library" passHref>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Library" className={styles.link} />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+          ))}
         </List>
       </Drawer>
     </Box>
